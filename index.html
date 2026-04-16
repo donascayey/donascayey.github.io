@@ -3,117 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Your Ultimate Video Gallery for Viral Content😂</title>
+    <title>Ultimate Video Gallery</title>
     <style>
-        /* Perbaikan: Menghilangkan double # dan menggunakan Flexbox untuk centering */
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg-color: #ffffff;
+            --text-color: #333333;
+            --link-color: #007bff;
+            --link-hover-color: #0056b3;
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --shadow-heavy: rgba(0, 0, 0, 0.15);
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-color);
             text-align: center;
-            background-color: #2c2c2c; /* Warna lebih gelap agar video stand out */
-            color: #ffffff;
+            padding: 0;
             margin: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 2rem 1rem;
+        }
+
+        h1 {
+            font-size: clamp(1.2rem, 5vw, 2.5rem);
+            color: var(--link-color);
+            margin: 0;
+            text-shadow: 1px 1px 3px var(--shadow-light);
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 20px;
+        }
+
+        figure {
+            background-color: var(--card-bg-color);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px var(--shadow-light);
+            margin: 0;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .video-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            padding: 0 10px;
+        figure:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px var(--shadow-heavy);
         }
 
-        /* Container Video yang lebih solid */
-        .video-container {
-            position: relative;
+        .img-container {
             width: 100%;
-            max-width: 800px;
-            background: #000;
-            border-radius: 12px;
+            aspect-ratio: 1 / 1;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-radius: 8px;
         }
 
-        video {
+        img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        figcaption {
+            margin: 15px 0;
+            font-size: 1rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .video-link {
             display: block;
-            outline: none;
+            padding: 10px;
+            background-color: var(--link-color);
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: background 0.3s;
         }
 
-        /* Banner Iklan Atas (Overlay) */
-        .ad-overlay-top {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 4px;
-            min-width: 320px;
-            min-height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .video-link:hover {
+            background-color: var(--link-hover-color);
         }
 
-        /* Container Iklan Bawah */
-        .bottom-ad-section {
-            margin-top: 25px;
-            width: 100%;
-            max-width: 728px;
+        .ad-container {
+            margin: 20px auto;
+            max-width: 100%;
         }
 
         @media (max-width: 480px) {
-            .video-title { font-size: 1.2rem; }
-            .ad-overlay-top { transform: translateX(-50%) scale(0.8); top: 5px; }
+            .gallery-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 10px;
+            }
+            figcaption { font-size: 0.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="video-title">A friend in need, is a friend indeed 😂</div>
+    <header>
+        <h1>Your Ultimate Video Gallery</h1>
+    </header>
 
-    <div class="video-container">
-        <!-- Slot Iklan Overlay Atas -->
-        <div class="ad-overlay-top" id="ad-top-slot">
-            <!-- Script Iklan 1 -->
-            <script type="text/javascript">
-                atOptions = {
-                    'key' : 'dae87a9f0396af430e6356cc8d20e1ce',
-                    'format' : 'iframe',
-                    'height' : 50,
-                    'width' : 320,
-                    'params' : {}
-                };
-            </script>
-            <script type="text/javascript" src="https://hypothesisgarden.com/dae87a9f0396af430e6356cc8d20e1ce/invoke.js"></script>
-        </div>
-
-        <!-- Video Player -->
-        <video controls poster="https://aceimg.com" playsinline>
-            <source src="https://cdn2.videy.co/OiVYJHts1.mp4" type="video/mp4">
-            Browser Anda tidak mendukung tag video.
-        </video>
+    <!-- Slot Iklan -->
+    <div class="ad-container">
+        <script type="text/javascript">
+  atOptions = {
+    'key' : 'f5137ab8b28f8ec42a1b616c47dea942',
+    'format' : 'iframe',
+    'height' : 250,
+    'width' : 300,
+    'params' : {}
+  };
+</script>
+<script src="https://hypothesisgarden.com/f5137ab8b28f8ec42a1b616c47dea942/invoke.js"></script>
     </div>
 
-    <!-- Area Iklan Bawah Video -->
-    <div class="bottom-ad-section">
-<head>
-<!-- JuicyAds PopUnders v3 Start -->
-<script type="text/javascript" src="https://js.juicyads.com/jp.php?c=4464y2x2t244u4r2p26463d424&u=https%3A%2F%2Fwww.juicyads.rocks"></script>
-<!-- JuicyAds PopUnders v3 End -->
-<head>
-    </div>
+    <main class="gallery-container">
+        <!-- Video 1 -->
+        <figure itemscope itemtype="http://schema.org">
+            <div class="img-container">
+                <img src="https://raw.githubusercontent.com/adrielis0801/Mabonx.mp4/refs/heads/main/v0r7Alvo1.jpg" alt="Behind shoes" itemprop="thumbnailUrl">
+            </div>
+            <figcaption itemprop="name">Behind the shoes 😂</figcaption>
+            <a href="https://mshanaxxx.blogspot.com/2026/04/your-ultimate-video-gallery-for-viral_01647692778.html?m=1" class="video-link">Watch Now</a>
+        </figure>
 
+        <!-- Video 2 -->
+        <figure itemscope itemtype="http://schema.org">
+            <div class="img-container">
+                <img src="https://raw.githubusercontent.com/adrielis0801/Mabonx.mp4/refs/heads/main/v7jpUVXf1.jpg" alt="In a hurry" itemprop="thumbnailUrl">
+            </div>
+            <figcaption itemprop="name">He's in a hurry 🏃‍♂️</figcaption>
+            <a href="https://mshanaxxx.blogspot.com/2026/04/blow-out-candle.html?m=1" class="video-link">Watch Now</a>
+        </figure>
+
+        <!-- Video 3 -->
+        <figure itemscope itemtype="http://schema.org">
+            <div class="img-container">
+                <img src="https://raw.githubusercontent.com/adrielis0801/Mabonx.mp4/refs/heads/main/ycpBWSyT.jpg" alt="Emotional" itemprop="thumbnailUrl">
+            </div>
+            <figcaption itemprop="name">I couldn't stand it 🥺</figcaption>
+            <a href="https://mshanaxxx.blogspot.com/2026/04/round.html?m=1" class="video-link">Watch Now</a>
+        </figure>
+
+        <!-- Video 4 -->
+        <figure itemscope itemtype="http://schema.org">
+            <div class="img-container">
+                <img src="https://raw.githubusercontent.com/adrielis0801/Mabonx.mp4/refs/heads/main/yw2EyE8r1.jpg" alt="Ocean waves" itemprop="thumbnailUrl">
+            </div>
+            <figcaption itemprop="name">Look at the waves 🌊</figcaption>
+            <a href="https://mshanaxxx.blogspot.com/2026/04/in-middle-of-road.html?m=1" class="video-link">Watch Now</a>
+        </figure>
+
+        <!-- Video 5 -->
+        <figure itemscope itemtype="http://schema.org">
+            <div class="img-container">
+                <img src="https://raw.githubusercontent.com/adrielis0801/Mabonx.mp4/refs/heads/main/zTJRQ.jpg" alt="Dream tutor" itemprop="thumbnailUrl">
+            </div>
+            <figcaption itemprop="name">Tutor i always wanted 📚</figcaption>
+            <a href="https://mshanaxxx.blogspot.com/2026/04/seems-very-excited.html?m=1" class="video-link">Watch Now</a>
+        </figure>
+
+        <!-- Video 6 -->
+        <figure itemscope itemtype="http://schema.org">
+            <div class="img-container">
+                <img src="https://raw.githubusercontent.com/adrielis0801/Mabonx.mp4/refs/heads/main/zWsMT.jpg" alt="Tiger stripes" itemprop="thumbnailUrl">
+            </div>
+            <figcaption itemprop="name">Tiger stripes, fearless 🐅</figcaption>
+            <a href="https://mshanaxxx.blogspot.com/2026/04/makes-everything-burn.html?m=1" class="video-link">Watch Now</a>
+        </figure>
+    </main>
+
+    <div style="margin: 40px 0;">
+        <a href="#" class="https://bony-teaching.com/b.3bV/0/PP3Ep_v/b/m-V/JpZADv0e2CN/zLkj1MNeTPAE5/LMTyY/3cOBTJUV1cMETBML" style="display:inline-block; width: 200px;">Next Page &raquo;</a>
+    </div>
 
    <!-- Histats.com  START  (aync)-->
 <script type="text/javascript">var _Hasync= _Hasync|| [];
 _Hasync.push(['Histats.start', '1,5007039,4,0,0,0,00010000']);
 _Hasync.push(['Histats.fasi', '1']);
 _Hasync.push(['Histats.track_hits', '']);
+_Hasync.push(['Histats.framed_page', '']);
 (function() {
 var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
 hs.src = ('//s10.histats.com/js15_as.js');
