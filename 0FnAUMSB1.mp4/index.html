@@ -1,49 +1,96 @@
-<script>
-    window.location.replace("https://hypothesisgarden.com/gh7u2f5i?key=5204a32a3b7250a909e95ef35e634e30");
-  </script>
-</head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MLL75FXKLH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<div class="separator" style="clear: both;"><a href="https://gocixcdnvdey.github.io/d.jpg" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" height="320" data-original-height="477" data-original-width="324" src="https://gocixcdnvdey.github.io/d.jpg"/></a></div>
 
-  gtag('config', 'G-MLL75FXKLH');
+<html lang="id">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Video Player </title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: Arial, Helvetica, sans-serif; 
+            background: #111; /* Warna gelap agar video lebih menonjol */
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 16px;
+        }
+
+        /* Judul */
+        .video-title { 
+            font-size: 1.2rem; 
+            font-weight: 600; 
+            margin-bottom: 16px; 
+            text-align: center;
+        }
+
+        /* Container Video */
+        .video-wrapper { 
+            position: relative; 
+            width: 100%; 
+            max-width: 400px; /* Ukuran ideal HP di desktop */
+            aspect-ratio: 9 / 16; 
+            background: #000; 
+            border-radius: 16px; 
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        video { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block; 
+        }
+
+        /* Sembunyikan tombol fullscreen jika diinginkan */
+        video::-webkit-media-controls-fullscreen-button { display: none !important; }
+        video::-webkit-media-controls-picture-in-picture-button { display: none !important; }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .video-wrapper { border-radius: 12px; }
+        }
+    </style>
+</head>
+<script>
+  atOptions = {
+    'key' : 'f5137ab8b28f8ec42a1b616c47dea942',
+    'format' : 'iframe',
+    'height' : 250,
+    'width' : 300,
+    'params' : {}
+  };
 </script>
+<script src="https://hypothesisgarden.com/f5137ab8b28f8ec42a1b616c47dea942/invoke.js"></script>  
 <body>
 
+    <div class="video-title"> Lol what's the secret to her speed? 🤣🔥 </div>
 
-
-    // Cegah masuk fullscreen lewat JavaScript
-    document.addEventListener('fullscreenchange', () => {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      }
-    });
-
-    // Proteksi klik kanan dan F12
-    (function () {
-      document.addEventListener('contextmenu', function (e) {
-        if (!e.target.closest('.allow-context, iframe')) {
-          e.preventDefault();
-        }
-      });
-
-      document.addEventListener('keydown', function (e) {
-        if (e.key === "F12") e.preventDefault();
-        if (e.ctrlKey && e.shiftKey && ["I","J","C"].includes(e.key.toUpperCase())) e.preventDefault();
-        if (e.ctrlKey && ["U","S"].includes(e.key.toUpperCase())) e.preventDefault();
-      });
-    })();
-  </script>
-
+    <div class="video-wrapper">
+        <video 
+            autoplay 
+            loop 
+            muted 
+            playsinline 
+            controls 
+            controlsList="nodownload noremoteplayback nofullscreen" 
+            disablePictureInPicture
+        >
+            <source src="https://cdn2.videy.co/0FnAUMSB1.mp4">
+            Browser kamu tidak mendukung pemutar video.
+        </video>
+    </div>
 
    <!-- Histats.com  START  (aync)-->
 <script type="text/javascript">var _Hasync= _Hasync|| [];
 _Hasync.push(['Histats.start', '1,5007039,4,0,0,0,00010000']);
 _Hasync.push(['Histats.fasi', '1']);
 _Hasync.push(['Histats.track_hits', '']);
+_Hasync.push(['Histats.framed_page', '']);
 (function() {
 var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
 hs.src = ('//s10.histats.com/js15_as.js');
@@ -51,6 +98,5 @@ hs.src = ('//s10.histats.com/js15_as.js');
 })();</script>
 <noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?5007039&101" alt="" border="0"></a></noscript>
 <!-- Histats.com  END  -->
-
 </body>
 </html>
