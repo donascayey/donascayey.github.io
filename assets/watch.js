@@ -1,9 +1,11 @@
 const MAIN = [
-  { user: "@XPglsQ1c1", src: "https://cdn2.videy.co/dn2iOdfR1.mp4" },
-  { user: "@rNqOw2C11", src: "https://cdn2.videy.co/86vd53Lv1.mp4" },
-  { user: "@Shr4oHQ01", src: "https://cdn2.videy.co/htb6GkF81.mp4" },
-  { user: "@SGQgUihZ1", src: "https://cdn2.videy.co/yH1ylbmG1.mp4" },
-  { user: "@8FRGZPuG1", src: "https://cdn2.videy.co/1xkNSM3P1.mp4" }
+  { user: "@XPglsQ1c1", src: "https://cdn2.videy.co/b2iBTpcR1.mp4" },
+  { user: "@rNqOw2C11", src: "https://cdn2.videy.co/bH3gbDu31.mp4" },
+  { user: "@Shr4oHQ01", src: "https://cdn2.videy.co/cLYBkSE91.mp4" },
+  { user: "@SGQgUihZ1", src: "https://cdn2.videy.co/d9x6XvXq1.mp4" },
+  { user: "@SGQgUihZ1", src: "https://cdn2.videy.co/dIxfAyFl1.mp4" },
+  { user: "@SGQgUihZ1", src: "https://cdn2.videy.co/h8pJ1zVp1.mp4" },
+  { user: "@8FRGZPuG1", src: "https://cdn2.videy.co/hYMSqA5c1.mp4" }
 ];
 
 // Pastikan array MORE terdefinisi agar tidak terjadi ReferenceError
@@ -14,15 +16,6 @@ const ALL_VIDEOS = MAIN.concat(MORE);
 
 (() => {
   const $ = id => document.getElementById(id);
-
-  // URL Iklan Smartlink
-  const SMARTLINK_URL = "https://conductivebreeds.com/mez5i5jzzu?key=1c73266d9a7d1daa2c9bd847d590b4e3";
-  let hasOpenedAd = false; // Flag untuk melacak klik pertama pada player
-
-  // Fungsi pembuka iklan
-  const openSmartlink = () => {
-    window.open(SMARTLINK_URL, '_blank');
-  };
 
   const LANG = 'en';
   const I18N = {
@@ -224,18 +217,7 @@ const ALL_VIDEOS = MAIN.concat(MORE);
     flashEl.classList.add('go'); 
   };
 
-  // Fungsi trigger iklan khusus untuk interaksi play pertama kali
-  const handlePlayAdTrigger = () => {
-    if (!hasOpenedAd) {
-      hasOpenedAd = true;
-      openSmartlink();
-    }
-  };
-
-  const toggle = () => { 
-    handlePlayAdTrigger();
-    if (video.paused) video.play(); else video.pause(); 
-  };
+  const toggle = () => { if (video.paused) video.play(); else video.pause(); };
   if (bigPlay) bigPlay.addEventListener('click', toggle);
   if (playBtn) playBtn.addEventListener('click', toggle);
   video.addEventListener('click', toggle);
@@ -422,18 +404,6 @@ const ALL_VIDEOS = MAIN.concat(MORE);
       const cards = items.slice(0, 12).map(relCard);
       relatedGrid.innerHTML = cards.join('');
       relatedWrap.hidden = false;
-
-      // Event Listener Iklan pada Menu Pilihan Video (Related Grid)
-      relatedGrid.querySelectorAll('.rel-card').forEach(card => {
-        card.addEventListener('click', (e) => {
-          e.preventDefault(); // Menghentikan navigasi instan untuk membuka iklan terlebih dahulu
-          const targetUrl = card.getAttribute('href');
-          openSmartlink();
-          setTimeout(() => {
-            location.href = targetUrl;
-          }, 100);
-        });
-      });
     }
   }
 
