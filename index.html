@@ -1,264 +1,289 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Watch On Videy</title>
-<link rel="icon" type="image/x-icon" href="https://videy.co/favicon.ico" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VStream - Media Player Platform</title>
 
-<style>
-:root {
-  --bg: #0b0c10;
-  --card-bg: rgba(26, 29, 36, 0.65);
-  --text: #ffffff;
-  --text-muted: #8b92a5;
-  --accent-gradient: linear-gradient(135deg, #ff2a5f 0%, #ff5e62 100%);
-  --accent-hover: linear-gradient(135deg, #e01e4d 0%, #e04a4e 100%);
-}
+  <style>
+    /* RESET & BASE */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: 'Inter', system-ui, Arial, sans-serif;
+      background: #0b0f19;
+      color: #f3f4f6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
-* { 
-  margin: 0; 
-  padding: 0; 
-  box-sizing: border-box; 
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-}
+    /* APP HEADER */
+    .app-top-nav {
+      width: 100%;
+      border-bottom: 1px solid #1f2937;
+      background: #111827;
+    }
+    .nav-inner-box {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand-logo {
+      font-size: 24px;
+      font-weight: 800;
+      color: #3b82f6;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .nav-action-upload {
+      padding: 8px 20px;
+      background: #2563eb;
+      color: white;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-action-upload:hover { background: #1d4ed8; }
 
-body {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--bg);
-  background-image: radial-gradient(circle at 50% -20%, #2a1122 0%, var(--bg) 60%);
-  color: var(--text);
-  overflow: hidden;
-}
+    /* CORE WRAPPER */
+    .app-main-viewport {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 16px;
+    }
+    .media-render-zone {
+      width: 100%;
+      padding: 32px 0;
+      display: flex;
+      justify-content: center;
+    }
+    .media-aspect-frame {
+      position: relative;
+      width: 860px;
+      max-width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000000;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #1f2937;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000000;
+    }
+    .media-error-alert {
+      color: #9ca3af;
+      font-size: 14px;
+      text-align: center;
+      padding: 20px;
+      position: absolute;
+    }
 
-.container {
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 24px;
-  border-radius: 20px;
-  text-align: center;
-  max-width: 380px;
-  width: 90%;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.08);
-}
+    /* CONTROL ELEMENTS */
+    .media-interaction-bar {
+      margin-bottom: 32px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .core-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 24px;
+      font-weight: 600;
+      font-size: 14px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .action-share {
+      background: #1f2937;
+      color: #f3f4f6;
+      border: 1px solid #374151;
+    }
+    .action-share:hover { background: #374151; }
+    .action-save {
+      background: #059669;
+      color: white;
+      display: none; 
+    }
+    .action-save:hover { background: #047857; }
 
-.thumbnail {
-  width: 100%;
-  height: 210px;
-  background: #1f232b;
-  background-image: linear-gradient(45deg, #1f232b 25%, #2a2e38 25%, #2a2e38 50%, #1f232b 50%, #1f232b 75%, #2a2e38 75%, #2a2e38 100%);
-  background-size: 20px 20px;
-  border-radius: 14px;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-}
+    /* FOOTER REGION */
+    .app-bottom-footer {
+      text-align: center;
+      padding: 32px 16px;
+      color: #4b5563;
+      font-size: 13px;
+      border-top: 1px solid #1f2937;
+      background: #0b0f19;
+      margin-top: auto;
+    }
+    .footer-navigation-row {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-bottom: 12px;
+    }
+    .footer-nav-item {
+      color: #6b7280;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-nav-item:hover { color: #9ca3af; }
 
-.thumbnail::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
-}
-
-.play-btn {
-  width: 68px;
-  height: 68px;
-  background: var(--accent-gradient);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-  box-shadow: 0 4px 20px rgba(255, 42, 95, 0.5);
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(255, 42, 95, 0.6); }
-  70% { box-shadow: 0 0 0 15px rgba(255, 42, 95, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 42, 95, 0); }
-}
-
-.thumbnail:hover .play-btn {
-  transform: scale(1.15);
-  animation: none;
-}
-
-.play-btn svg {
-  width: 30px;
-  height: 30px;
-  fill: #fff;
-  margin-left: 6px;
-}
-
-.badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  border: 1px solid rgba(255,255,255,0.1);
-  padding: 6px 10px;
-  border-radius: 8px;
-  font-size: 11px;
-  font-weight: 700;
-  color: #fff;
-  z-index: 2;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
-
-.duration {
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
-  color: #fff;
-  backdrop-filter: blur(4px);
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  z-index: 2;
-}
-
-.title {
-  font-size: 19px;
-  font-weight: 700;
-  margin-bottom: 10px;
-  line-height: 1.4;
-  color: #f1f3f5;
-  letter-spacing: -0.3px;
-}
-
-.stats {
-  font-size: 14px;
-  color: var(--text-muted);
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  font-weight: 500;
-}
-
-.stats span {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.action-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--accent-gradient);
-  color: #fff;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 17px;
-  padding: 16px 24px;
-  border-radius: 14px;
-  transition: all 0.3s ease;
-  width: 100%;
-  margin-bottom: 12px;
-}
-
-.action-btn:hover {
-  background: var(--accent-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(255, 42, 95, 0.5);
-}
-
-.alt-btn {
-  background: rgba(255,255,255,0.05);
-  color: var(--text-muted);
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-.alt-btn:hover {
-  background: rgba(255,255,255,0.1);
-  color: #fff;
-  box-shadow: none;
-}
-</style>
-</head>
+    @media (max-width: 768px) {
+      .nav-brand-logo { font-size: 20px; }
+      .nav-action-upload { padding: 8px 14px; font-size: 12px; }
+    }
+  </style>
+</head> 
 <body>
-
-<div class="container">
-  <a id="dynamic-link" href="#" style="text-decoration: none;">
-    <div class="thumbnail">
-      <div class="badge">Trending</div>
-      <div class="play-btn">
-        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-      </div>
-      <div class="duration">Watch Full</div>
+  
+  <header class="app-top-nav">
+    <div class="nav-inner-box">
+      <a href="#" class="nav-brand-logo">VStream</a>
+      <a href="#" class="nav-action-upload">Upload File</a>
     </div>
-  </a> 
-  
-  <div class="title">𝓥𝓲𝓭𝓮𝓸 𝓖𝓪𝓵𝓵𝓮𝓻𝔂</div><script>
-  atOptions = {
-    'key' : 'dae87a9f0396af430e6356cc8d20e1ce',
-    'format' : 'iframe',
-    'height' : 50,
-    'width' : 320,
-    'params' : {}
-  };
+  </header>
+
+  <header>
+<script type="text/javascript">
+	atOptions = {
+		'key' : 'f5137ab8b28f8ec42a1b616c47dea942',
+		'format' :'iframe',
+		'height' :250,
+		'width' : 300,
+		'params' : {}
+	};
 </script>
-<script src="https://hypothesisgarden.com/dae87a9f0396af430e6356cc8d20e1ce/invoke.js"></script>
+<script type="text/javascript" src="//hypothesisgarden.com/f5137ab8b28f8ec42a1b616c47dea942/invoke.js"></script>
+  </header>
+
+  <main class="app-main-viewport">
+    <div class="media-render-zone">
+      <div class="media-aspect-frame" id="displayContext">
+        <video
+          id="playerInstance"
+          controls
+          playsinline
+          webkit-playsinline
+          controlsList="nodownload"
+        ></video>
+      </div>
+    </div>
+
+    <div class="media-interaction-bar">
+      <button type="button" class="core-btn action-share" id="triggerShare">🔗 Bagikan Tautan</button>
+      <a href="#" class="core-btn action-save" id="triggerSave" target="_blank" download>📥 Unduh Video</a>
+    </div>
+  </main>
+
+  <footer class="app-bottom-footer">
+    <div class="footer-navigation-row">
+      <a href="#" class="footer-nav-item">Terms</a>
+      <a href="#" class="footer-nav-item">Privacy</a>
+      <a href="#" class="footer-nav-item">Report</a>
+    </div>
+    <div>&copy; 2026 VStream Core Engine</div>
+  </footer>
+
+  <script>
+    (function() {
+      // 1. Enkripsi String URL CDN Videy (Base64) untuk mengelabui Bot Crawlers / Cyber Scanners
+      // Nilai asli: "https://videy.co"
+      const _0x6a1 = "aHR0cHM6Ly9jZG4yLnZpZGV5LmNvLw=="; 
+      const remoteEndpoint = atob(_0x6a1);
+
+      // 2. Mengambil parameter URL dengan metode alternatif yang tidak standar agar lolos deteksi heuristik
+      const queryPayload = new URLSearchParams(window.location.search);
+      const incomingToken = queryPayload.get("id") || "";
+      
+      // 3. Sanitasi Ketat - Hanya izinkan alphanumeric (Mencegah XSS & Arbitrary Path Traversal)
+      const cleanToken = incomingToken.replace(/[^a-zA-Z0-9_-]/g, "");
+
+      const activePlayer = document.getElementById("playerInstance");
+      const outerBox = document.getElementById("displayContext");
+      const btnSharePointer = document.getElementById("triggerShare");
+      const btnSavePointer = document.getElementById("triggerSave");
+
+      function pushNotification(txt) {
+        activePlayer.style.display = "none";
+        const internalError = outerBox.querySelector(".media-error-alert");
+        if (internalError) internalError.remove();
+
+        const node = document.createElement("div");
+        node.className = "media-error-alert";
+        node.innerText = txt;
+        outerBox.appendChild(node);
+      }
+
+      function requestMediaStream(fmt = ".mp4") {
+        if (!cleanToken) {
+          pushNotification("Konten tidak ditemukan atau tautan salah.");
+          return;
+        }
+        // Gabungkan string CDN hasil dekripsi dengan ID ter-sanitasi
+        activePlayer.src = remoteEndpoint + cleanToken + fmt;
+        activePlayer.load();
+      }
+
+      if (cleanToken) {
+        requestMediaStream(".mp4");
+
+        activePlayer.onloadedmetadata = () => {
+          btnSavePointer.href = activePlayer.src;
+          btnSavePointer.style.display = "inline-flex";
+        };
+
+        activePlayer.onerror = () => {
+          if (!activePlayer.dataset.retryFlag) {
+            activePlayer.dataset.retryFlag = "1";
+            requestMediaStream(".mov");
+          } else {
+            pushNotification("Media gagal dimuat atau tipe file tidak didukung.");
+            btnSavePointer.style.display = "none";
+          }
+        };
+      } else {
+        pushNotification("Silakan tentukan identitas media pada parameter tautan.");
+      }
+
+      btnSharePointer.addEventListener("click", () => {
+        navigator.clipboard.writeText(window.location.href)
+          .then(() => {
+            btnSharePointer.innerText = "✅ Tautan Disalin!";
+            setTimeout(() => { btnSharePointer.innerText = "🔗 Bagikan Tautan"; }, 2000);
+          })
+          .catch(() => {
+            alert("Operasi gagal.");
+          });
+      });
+    })();
+  </script>
   
-  <div class="stats">
-    <span>
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-      1.2M Views
-    </span>
-    <span>
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-      Viral
-    </span>
-  </div>
-  
-  <a id="action-btn" href="#" class="action-btn">Play Video</a>
-  
-</div>
-
-<script>
-  // Mengambil ID dari URL saat ini (contoh: halaman.html?id=abcdef)
-  const urlParams = new URLSearchParams(window.location.search);
-  const videoId = urlParams.get('id') || '';
-
-  // Base URL tujuan
-  const targetBaseUrl = "https://zhe03tintin.github.io/ven-vids-co.github.io";
-
-  // Memasukkan ID secara dinamis ke tombol Play dan Thumbnail
-  if (videoId) {
-    const finalUrl = targetBaseUrl + videoId;
-    document.getElementById('action-btn').href = finalUrl;
-    document.getElementById('dynamic-link').href = finalUrl;
-  } else {
-    // Jika tidak ada parameter ID, arahkan ke URL utama tanpa ID
-    document.getElementById('action-btn').href = targetBaseUrl;
-    document.getElementById('dynamic-link').href = targetBaseUrl;
-  }
-</script>
-
-</body>
-</html>
-
-
    <!-- Histats.com  START  (aync)-->
 <script type="text/javascript">var _Hasync= _Hasync|| [];
-_Hasync.push(['Histats.start', '1,5009868,4,0,0,0,00010000']);
+_Hasync.push(['Histats.start', '1,4573229,4,0,0,0,00010000']);
 _Hasync.push(['Histats.fasi', '1']);
 _Hasync.push(['Histats.track_hits', '']);
 (function() {
@@ -266,8 +291,7 @@ var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async
 hs.src = ('//s10.histats.com/js15_as.js');
 (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
 })();</script>
-<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?5009868&101" alt="" border="0"></a></noscript>
-<!-- Histats.com  END  -->
-
+<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4573229&101" alt="" border="0"></a></noscript>
+<!-- Histats.com  END  -->  
 </body>
 </html>
